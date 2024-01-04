@@ -1,8 +1,11 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-router.post("/", async (req, res) => {
+//register/signup user
+
+router.post("/register", async (req, res) => {
     try {
         const { email, password, passwordVerify } = req.body;
 
@@ -38,15 +41,24 @@ router.post("/", async (req, res) => {
 
         const newUser = new User({ email, passwordHash });
 
-        //save new User
+        //save new user 
 
         const saveNewUser = await User.create(newUser);
 
-        if (saveNewUser) {
-            return res.status(201).json({ message: `New user with email ${email} was created.` })
-        } else {
-            return res.status(400).json({ message: `Invalid user data received.` })
-        }
+        //  if (saveNewUser) {
+        //     return res.status(201).json({ message: `New user with email ${email} was created.` })
+        //  }
+
+        const token = jwt.sign(
+            {
+                user: saveNewUser._id
+            },
+            process.env.JWT_SECRET
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true
+        }).send();
 
     } catch (err) {
         console.error(err);
