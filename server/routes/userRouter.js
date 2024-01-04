@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
     try {
@@ -27,6 +28,27 @@ router.post("/", async (req, res) => {
 
         if (existingUser) {
             return res.status(409).json({ message: `An account with this email already exists` });
+        }
+
+        //hash the password
+
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        //create new User
+
+        const newUser = new User({
+            email,
+            passwordHash
+        });
+
+        //save new User
+
+        const saveNewUser = await User.create(newUser);
+
+        if (saveNewUser) {
+            return res.status(201).json({ message: `New user with email ${email}was created.` })
+        } else {
+            return res.status(400).json({ message: `Invalid user data received.` })
         }
 
     } catch (err) {
