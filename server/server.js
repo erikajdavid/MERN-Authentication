@@ -6,6 +6,10 @@ const app = express();
 
 const PORT = process.env.PORT;
 
+app.get("/test", (req, res) => {
+    return res.send("It works");
+});
+
 app.listen(PORT, () => {
     console.log(`Server is listening on http://localhost:${PORT}`);
 });
