@@ -66,4 +66,53 @@ router.post("/register", async (req, res) => {
     }
 });
 
+//login endpoint
+
+router.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: `All fields are required.` })
+        }
+
+        const existingUser = await User.findOne({ email });
+
+        if (!existingUser) {
+            return res.status(401).json({ message: `Wrong email or password. Please try again.` });
+        }
+
+        const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
+
+        if (!passwordCorrect) {
+            return res.status(401).json({ message: `Wrong email or password. Please try again.` });
+        }
+
+        // Generate and send token upon successful login
+        const token = jwt.sign(
+            {
+                user: existingUser._id
+            },
+            process.env.JWT_SECRET
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true
+        }).send();
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send();
+    }
+});
+
+//logout endpoint
+
+router.get("/logout", (req, res) => {
+    res.cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0)
+    }).send();
+});
+
 module.exports = router;
