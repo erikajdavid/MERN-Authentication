@@ -30,3 +30,6 @@ mongoose.connection.on('error', err => {
 
 //user route
 app.use("/auth", require("./routes/userRouter"));
+
+//list route
+app.use("/todolist", require("./routes/listRouter"));
