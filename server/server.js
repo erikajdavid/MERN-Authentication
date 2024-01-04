@@ -7,6 +7,8 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(express.json());
+
 app.get("/test", (req, res) => {
     return res.send("It works");
 });
@@ -26,3 +28,8 @@ mongoose.connection.once('open', () => {
 mongoose.connection.on('error', err => {
     console.log(err);
 })
+
+//set up routes
+
+//user route
+app.use("/auth", require("./routes/userRouter"));
