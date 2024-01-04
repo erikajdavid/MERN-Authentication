@@ -8,10 +8,6 @@ const userSchema = new mongoose.Schema({
     passwordHash: {
         type: String,
         required: true
-    },
-    passwordVerify: {
-        type: String,
-        required: true
     }
 });
 
