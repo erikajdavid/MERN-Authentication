@@ -36,17 +36,14 @@ router.post("/", async (req, res) => {
 
         //create new User
 
-        const newUser = new User({
-            email,
-            passwordHash
-        });
+        const newUser = new User({ email, passwordHash });
 
         //save new User
 
         const saveNewUser = await User.create(newUser);
 
         if (saveNewUser) {
-            return res.status(201).json({ message: `New user with email ${email}was created.` })
+            return res.status(201).json({ message: `New user with email ${email} was created.` })
         } else {
             return res.status(400).json({ message: `Invalid user data received.` })
         }
