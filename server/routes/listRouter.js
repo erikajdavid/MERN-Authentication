@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const todoList = require("../models/listModel");
+const auth = require("../middlewear/auth");
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
         const { todo } = req.body
 
