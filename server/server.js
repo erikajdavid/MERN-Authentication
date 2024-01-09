@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
 require("dotenv").config();
 
 //set up server
@@ -11,6 +13,9 @@ const PORT = process.env.PORT || 5000;
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: ["http://localhost:5173"]
+}));
 
 //connect to MongoDB
 
