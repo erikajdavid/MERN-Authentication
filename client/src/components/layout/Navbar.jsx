@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import Logout from "../auth/Logout";
 
 const Navbar = () => {
 
-    const loggedIn = useContext(AuthContext);
+    const { loggedIn } = useContext(AuthContext);
     //console.log(loggedIn);
 
     return (
@@ -17,8 +18,12 @@ const Navbar = () => {
                 </>
             )}
             {
-                loggedIn === true && <Link to="/todolist">To do list</Link>
-            }
+                loggedIn === true && (
+                <>
+                    <Link to="/todolist">To do list</Link>
+                    <Logout />
+                </>
+            )}
 
         </nav>
     );
