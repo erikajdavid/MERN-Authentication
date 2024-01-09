@@ -7,13 +7,13 @@ import AuthContext from "./components/context/AuthContext";
 
 const Router = () => {
 
-  const loggedIn = useContext(AuthContext);
+  const { loggedIn } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<div>Home</div>} />
+        <Route path="/" />
         { loggedIn === false && (
           <>
             <Route path="/register" element={<Register />} />
