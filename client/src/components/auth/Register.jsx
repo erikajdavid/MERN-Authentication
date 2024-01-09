@@ -22,7 +22,9 @@ const Register = () => {
 
             //make an http request
             //server time
-            await axios.post("http://localhost:5000/auth/register", registerData);
+            await axios.post("http://localhost:5000/auth/register", registerData, {
+                withCredentials: true
+            });
 
         } catch (err) {
             console.error(err);
