@@ -13,7 +13,7 @@ const Router = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" />
+      <Route path="/" element={<div>THIS IS HOME</div>} />
         { loggedIn === false && (
           <>
             <Route path="/register" element={<Register />} />
