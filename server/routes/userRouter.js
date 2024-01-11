@@ -54,11 +54,14 @@ router.post("/register", async (req, res) => {
                 user: saveNewUser._id
             },
             process.env.JWT_SECRET
+            //do we need expire here?
         );
 
         res.cookie("token", token, {
             httpOnly: true
         }).send();
+
+        //do we need a refresh token here?
 
     } catch (err) {
         console.error(err);
@@ -94,11 +97,14 @@ router.post("/login", async (req, res) => {
                 user: existingUser._id
             },
             process.env.JWT_SECRET
+            //should this token expire?
         );
 
         res.cookie("token", token, {
             httpOnly: true
         }).send();
+
+        //do we need a refresh token here?
 
     } catch (err) {
         console.error(err);
