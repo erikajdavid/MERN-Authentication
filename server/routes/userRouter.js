@@ -53,7 +53,10 @@ router.post("/register", async (req, res) => {
             {
                 user: saveNewUser._id
             },
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h"
+            }
             //do we need expire here?
         );
 
@@ -96,8 +99,10 @@ router.post("/login", async (req, res) => {
             {
                 user: existingUser._id
             },
-            process.env.JWT_SECRET
-            //should this token expire?
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "15min"
+            }
         );
 
         res.cookie("token", token, {
